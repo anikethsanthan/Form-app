@@ -1,6 +1,6 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { Platform, StatusBar, StyleSheet, Text } from "react-native";
 
 export default function Header() {
   return (
@@ -17,10 +17,16 @@ export default function Header() {
 
 const styles = StyleSheet.create({
   headerContainer: {
-    paddingVertical: 24,
+    paddingTop:
+      Platform.OS === "ios"
+        ? 50
+        : StatusBar.currentHeight
+        ? StatusBar.currentHeight + 20
+        : 44,
+    paddingBottom: 20,
     paddingHorizontal: 20,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     shadowColor: "#6B46C1",
     shadowOffset: {
       width: 0,

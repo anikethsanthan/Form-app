@@ -4,7 +4,6 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
-  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -120,7 +119,7 @@ export default function FormScreen() {
   };
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <View style={styles.mainContainer}>
       <Header />
       <LinearGradient
         style={styles.MainContainer}
@@ -243,14 +242,14 @@ export default function FormScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
-    </SafeAreaView>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  safeArea: {
+  mainContainer: {
     flex: 1,
-    backgroundColor: "#EAE7F0",
+    backgroundColor: "#8B5CF6", // Match header gradient color
   },
   MainContainer: {
     flex: 1,
