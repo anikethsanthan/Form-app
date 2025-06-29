@@ -236,14 +236,9 @@ export default function FormScreen() {
                 style={styles.submitButtonContainer}
                 onPress={handleSubmit}
               >
-                <LinearGradient
-                  style={styles.submitButton}
-                  colors={["#EAE7F0", "#FFFFFF"]}
-                  start={{ x: 0, y: 0 }}
-                  end={{ x: 1, y: 1 }}
-                >
+                <View style={styles.submitButton}>
                   <Text style={styles.submitButtonText}>Submit</Text>
-                </LinearGradient>
+                </View>
               </TouchableOpacity>
             </View>
           </ScrollView>
