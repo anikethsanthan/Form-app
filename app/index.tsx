@@ -331,6 +331,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 25,
     fontWeight: "800",
+    fontFamily: "Quicksand_Medium",
     color: "#2D3748",
     textAlign: "center",
     marginBottom: 8,
@@ -338,6 +339,7 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
+    fontFamily: "Quicksand_Medium",
     color: "#718096",
     textAlign: "center",
     fontWeight: "300",
@@ -348,6 +350,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 16,
     fontWeight: "700",
+    fontFamily: "Quicksand_Medium",
     marginBottom: 10,
     color: "#4A5568",
     letterSpacing: 0.3,
@@ -358,6 +361,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     padding: 16,
     fontSize: 16,
+    fontFamily: "Quicksand_Medium",
     backgroundColor: "#FAFAFA",
     color: "#2D3748",
     shadowColor: "#000",
@@ -388,6 +392,7 @@ const styles = StyleSheet.create({
   errorText: {
     color: "#F56565",
     fontSize: 13,
+    fontFamily: "Quicksand_Medium",
     marginTop: 6,
     fontWeight: "600",
     marginLeft: 4,
@@ -419,6 +424,7 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 18,
     fontWeight: "800",
+    fontFamily: "Quicksand_Medium",
     letterSpacing: 1,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
     textShadowOffset: { width: 0, height: 1 },

@@ -81,6 +81,7 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "700",
+    fontFamily: "Quicksand_Medium",
     color: "#2D3748",
     letterSpacing: 0.5,
   },
