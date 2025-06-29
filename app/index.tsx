@@ -306,7 +306,7 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    padding: 24,
+    padding: 18,
     paddingTop: 32,
   },
   formContainer: {
