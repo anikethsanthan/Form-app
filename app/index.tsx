@@ -12,7 +12,9 @@ import {
   View,
 } from "react-native";
 import * as Yup from "yup";
+import CustomDropdown from "../components/CustomDropdown";
 import Header from "../components/Header";
+import { stateNames } from "../utils/states";
 
 interface FormData {
   name: string;
@@ -189,18 +191,15 @@ export default function FormScreen() {
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>State *</Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    errors.state && styles.inputError,
-                    focusedField === "state" && styles.inputFocused,
-                  ]}
+                <CustomDropdown
+                  data={stateNames}
                   value={formData.state}
-                  onChangeText={(text) => updateField("state", text)}
-                  onFocus={() => setFocusedField("state")}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder="Enter your state"
-                  placeholderTextColor="#A0AEC0"
+                  onSelect={(selectedState) =>
+                    updateField("state", selectedState)
+                  }
+                  placeholder="Select your state"
+                  error={!!errors.state}
+                  focused={focusedField === "state"}
                 />
                 {errors.state && (
                   <Text style={styles.errorText}>{errors.state}</Text>
