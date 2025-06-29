@@ -56,6 +56,7 @@ export default function FormScreen() {
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [focusedField, setFocusedField] = useState<string | null>(null);
 
   const updateField = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
@@ -123,29 +124,43 @@ export default function FormScreen() {
       <Header />
       <LinearGradient
         style={styles.MainContainer}
-        colors={["#EAE7F0", "#FFFFFF"]}
+        colors={["#667eea", "#764ba2", "#f093fb"]}
         start={{ x: 0, y: 0 }}
-        end={{ x: 0, y: 1 }}
+        end={{ x: 1, y: 1 }}
       >
         <KeyboardAvoidingView
           style={styles.container}
           behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
-          <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <ScrollView
+            contentContainerStyle={styles.scrollContainer}
+            showsVerticalScrollIndicator={false}
+          >
             <View style={styles.formContainer}>
-              <Text style={styles.title}>Personal Information </Text>
+              <View style={styles.titleContainer}>
+                <Text style={styles.title}>Personal Information </Text>
+                <Text style={styles.subtitle}>
+                  Please fill in your details below
+                </Text>
+              </View>
 
               <View style={styles.inputContainer}>
-                <Text style={styles.label}>Name *</Text>
+                <Text style={styles.label}>Full Name *</Text>
                 <TextInput
-                  style={[styles.input, errors.name && styles.inputError]}
+                  style={[
+                    styles.input,
+                    errors.name && styles.inputError,
+                    focusedField === "name" && styles.inputFocused,
+                  ]}
                   value={formData.name}
                   onChangeText={(text) => updateField("name", text)}
+                  onFocus={() => setFocusedField("name")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter your full name"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                 />
                 {errors.name && (
-                  <Text style={styles.errorText}>{errors.name}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.name}</Text>
                 )}
               </View>
 
@@ -156,60 +171,81 @@ export default function FormScreen() {
                     styles.input,
                     styles.multilineInput,
                     errors.address && styles.inputError,
+                    focusedField === "address" && styles.inputFocused,
                   ]}
                   value={formData.address}
                   onChangeText={(text) => updateField("address", text)}
+                  onFocus={() => setFocusedField("address")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter your complete address"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                   multiline
                   numberOfLines={3}
                 />
                 {errors.address && (
-                  <Text style={styles.errorText}>{errors.address}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.address}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>State *</Text>
                 <TextInput
-                  style={[styles.input, errors.state && styles.inputError]}
+                  style={[
+                    styles.input,
+                    errors.state && styles.inputError,
+                    focusedField === "state" && styles.inputFocused,
+                  ]}
                   value={formData.state}
                   onChangeText={(text) => updateField("state", text)}
+                  onFocus={() => setFocusedField("state")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter your state"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                 />
                 {errors.state && (
-                  <Text style={styles.errorText}>{errors.state}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.state}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>City *</Text>
                 <TextInput
-                  style={[styles.input, errors.city && styles.inputError]}
+                  style={[
+                    styles.input,
+                    errors.city && styles.inputError,
+                    focusedField === "city" && styles.inputFocused,
+                  ]}
                   value={formData.city}
                   onChangeText={(text) => updateField("city", text)}
+                  onFocus={() => setFocusedField("city")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter your city"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                 />
                 {errors.city && (
-                  <Text style={styles.errorText}>{errors.city}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.city}</Text>
                 )}
               </View>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Pincode *</Text>
                 <TextInput
-                  style={[styles.input, errors.pincode && styles.inputError]}
+                  style={[
+                    styles.input,
+                    errors.pincode && styles.inputError,
+                    focusedField === "pincode" && styles.inputFocused,
+                  ]}
                   value={formData.pincode}
                   onChangeText={(text) => updateField("pincode", text)}
+                  onFocus={() => setFocusedField("pincode")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter 6-digit pincode"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                   keyboardType="numeric"
                   maxLength={6}
                 />
                 {errors.pincode && (
-                  <Text style={styles.errorText}>{errors.pincode}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.pincode}</Text>
                 )}
               </View>
 
@@ -219,26 +255,35 @@ export default function FormScreen() {
                   style={[
                     styles.input,
                     errors.phoneNumber && styles.inputError,
+                    focusedField === "phoneNumber" && styles.inputFocused,
                   ]}
                   value={formData.phoneNumber}
                   onChangeText={(text) => updateField("phoneNumber", text)}
+                  onFocus={() => setFocusedField("phoneNumber")}
+                  onBlur={() => setFocusedField(null)}
                   placeholder="Enter 10-digit phone number"
-                  placeholderTextColor="#9CA3AF"
+                  placeholderTextColor="#A0AEC0"
                   keyboardType="phone-pad"
                   maxLength={10}
                 />
                 {errors.phoneNumber && (
-                  <Text style={styles.errorText}>{errors.phoneNumber}</Text>
+                  <Text style={styles.errorText}>⚠️ {errors.phoneNumber}</Text>
                 )}
               </View>
 
               <TouchableOpacity
                 style={styles.submitButtonContainer}
                 onPress={handleSubmit}
+                activeOpacity={0.8}
               >
-                <View style={styles.submitButton}>
-                  <Text style={styles.submitButtonText}>Submit</Text>
-                </View>
+                <LinearGradient
+                  colors={["#667eea", "#764ba2"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 0 }}
+                  style={styles.submitButton}
+                >
+                  <Text style={styles.submitButtonText}>Submit Form</Text>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -251,7 +296,7 @@ export default function FormScreen() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#EAE7F0", // Match header gradient color
+    backgroundColor: "#667eea",
   },
   MainContainer: {
     flex: 1,
@@ -261,97 +306,122 @@ const styles = StyleSheet.create({
   },
   scrollContainer: {
     flexGrow: 1,
-    padding: 20,
+    padding: 24,
+    paddingTop: 32,
   },
   formContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.95)",
-    borderRadius: 16,
+    backgroundColor: "rgba(255, 255, 255, 0.98)",
+    borderRadius: 24,
     padding: 18,
-    shadowColor: "#B8B5C9",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 10,
     },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
-    elevation: 8,
+    shadowOpacity: 0.25,
+    shadowRadius: 20,
+    elevation: 15,
     borderWidth: 1,
-    borderColor: "rgba(184, 181, 201, 0.2)",
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  titleContainer: {
+    alignItems: "center",
+    marginBottom: 32,
   },
   title: {
+    fontSize: 25,
+    fontWeight: "800",
+    color: "#2D3748",
     textAlign: "center",
-    marginBottom: 30,
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "#5B4B75",
-    textShadowColor: "rgba(91, 75, 117, 0.2)",
-    textShadowOffset: { width: 0, height: 1 },
-    textShadowRadius: 2,
+    marginBottom: 8,
+    letterSpacing: 0.5,
+  },
+  subtitle: {
+    fontSize: 16,
+    color: "#718096",
+    textAlign: "center",
+    fontWeight: "300",
   },
   inputContainer: {
-    marginBottom: 20,
+    marginBottom: 24,
   },
   label: {
     fontSize: 16,
-    fontWeight: "600",
-    marginBottom: 8,
-    color: "#6B5E79",
+    fontWeight: "700",
+    marginBottom: 10,
+    color: "#4A5568",
+    letterSpacing: 0.3,
   },
   input: {
-    borderWidth: 1.5,
-    borderColor: "#D1C4E3",
-    borderRadius: 12,
-    padding: 14,
+    borderWidth: 2,
+    borderColor: "#E2E8F0",
+    borderRadius: 16,
+    padding: 16,
     fontSize: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
-    color: "#374151",
-    shadowColor: "#B8B5C9",
+    backgroundColor: "#FAFAFA",
+    color: "#2D3748",
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 2,
-  },
-  inputError: {
-    borderColor: "#EF4444",
-    backgroundColor: "rgba(254, 242, 242, 0.8)",
-    shadowColor: "#EF4444",
-  },
-  errorText: {
-    color: "#DC2626",
-    fontSize: 12,
-    marginTop: 4,
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    elevation: 3,
     fontWeight: "500",
   },
+  inputFocused: {
+    borderColor: "#667eea",
+    backgroundColor: "#FFFFFF",
+    shadowColor: "#667eea",
+    shadowOpacity: 0.15,
+    shadowRadius: 12,
+    elevation: 6,
+    transform: [{ scale: 1.02 }],
+  },
+  inputError: {
+    borderColor: "#E53E3E",
+    backgroundColor: "#FED7D7",
+    shadowColor: "#E53E3E",
+    shadowOpacity: 0.2,
+  },
+  errorText: {
+    color: "#E53E3E",
+    fontSize: 13,
+    marginTop: 6,
+    fontWeight: "600",
+    marginLeft: 4,
+  },
   multilineInput: {
-    height: 80,
+    height: 90,
     textAlignVertical: "top",
+    paddingTop: 16,
   },
   submitButtonContainer: {
-    marginTop: 24,
-    borderRadius: 12,
-    shadowColor: "#B8B5C9",
+    marginTop: 32,
+    borderRadius: 16,
+    shadowColor: "#667eea",
     shadowOffset: {
       width: 0,
-      height: 4,
+      height: 8,
     },
     shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 8,
+    shadowRadius: 16,
+    elevation: 12,
   },
   submitButton: {
-    borderRadius: 12,
-    padding: 16,
+    borderRadius: 16,
+    padding: 18,
     alignItems: "center",
-    borderWidth: 1,
-    borderColor: "#D1C4E3",
+    justifyContent: "center",
   },
   submitButtonText: {
-    color: "#5B4B75",
+    color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "bold",
-    letterSpacing: 0.5,
+    fontWeight: "800",
+    letterSpacing: 1,
+    textShadowColor: "rgba(0, 0, 0, 0.2)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 });
