@@ -3,6 +3,7 @@ import {
   Alert,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
@@ -117,114 +118,127 @@ export default function FormScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-      <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.formContainer}>
-          <Text style={styles.title}>Personal Information Form</Text>
+    <SafeAreaView style={styles.safeArea}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
+        <ScrollView contentContainerStyle={styles.scrollContainer}>
+          <View style={styles.formContainer}>
+            <Text style={styles.title}>Personal Information Form</Text>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Name *</Text>
-            <TextInput
-              style={[styles.input, errors.name && styles.inputError]}
-              value={formData.name}
-              onChangeText={(text) => updateField("name", text)}
-              placeholder="Enter your full name"
-              placeholderTextColor="#999"
-            />
-            {errors.name && <Text style={styles.errorText}>{errors.name}</Text>}
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Name *</Text>
+              <TextInput
+                style={[styles.input, errors.name && styles.inputError]}
+                value={formData.name}
+                onChangeText={(text) => updateField("name", text)}
+                placeholder="Enter your full name"
+                placeholderTextColor="#999"
+              />
+              {errors.name && (
+                <Text style={styles.errorText}>{errors.name}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Address *</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  styles.multilineInput,
+                  errors.address && styles.inputError,
+                ]}
+                value={formData.address}
+                onChangeText={(text) => updateField("address", text)}
+                placeholder="Enter your complete address"
+                placeholderTextColor="#999"
+                multiline
+                numberOfLines={3}
+              />
+              {errors.address && (
+                <Text style={styles.errorText}>{errors.address}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>State *</Text>
+              <TextInput
+                style={[styles.input, errors.state && styles.inputError]}
+                value={formData.state}
+                onChangeText={(text) => updateField("state", text)}
+                placeholder="Enter your state"
+                placeholderTextColor="#999"
+              />
+              {errors.state && (
+                <Text style={styles.errorText}>{errors.state}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>City *</Text>
+              <TextInput
+                style={[styles.input, errors.city && styles.inputError]}
+                value={formData.city}
+                onChangeText={(text) => updateField("city", text)}
+                placeholder="Enter your city"
+                placeholderTextColor="#999"
+              />
+              {errors.city && (
+                <Text style={styles.errorText}>{errors.city}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Pincode *</Text>
+              <TextInput
+                style={[styles.input, errors.pincode && styles.inputError]}
+                value={formData.pincode}
+                onChangeText={(text) => updateField("pincode", text)}
+                placeholder="Enter 6-digit pincode"
+                placeholderTextColor="#999"
+                keyboardType="numeric"
+                maxLength={6}
+              />
+              {errors.pincode && (
+                <Text style={styles.errorText}>{errors.pincode}</Text>
+              )}
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Phone Number *</Text>
+              <TextInput
+                style={[styles.input, errors.phoneNumber && styles.inputError]}
+                value={formData.phoneNumber}
+                onChangeText={(text) => updateField("phoneNumber", text)}
+                placeholder="Enter 10-digit phone number"
+                placeholderTextColor="#999"
+                keyboardType="phone-pad"
+                maxLength={10}
+              />
+              {errors.phoneNumber && (
+                <Text style={styles.errorText}>{errors.phoneNumber}</Text>
+              )}
+            </View>
+
+            <TouchableOpacity
+              style={styles.submitButton}
+              onPress={handleSubmit}
+            >
+              <Text style={styles.submitButtonText}>Submit</Text>
+            </TouchableOpacity>
           </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Address *</Text>
-            <TextInput
-              style={[
-                styles.input,
-                styles.multilineInput,
-                errors.address && styles.inputError,
-              ]}
-              value={formData.address}
-              onChangeText={(text) => updateField("address", text)}
-              placeholder="Enter your complete address"
-              placeholderTextColor="#999"
-              multiline
-              numberOfLines={3}
-            />
-            {errors.address && (
-              <Text style={styles.errorText}>{errors.address}</Text>
-            )}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>State *</Text>
-            <TextInput
-              style={[styles.input, errors.state && styles.inputError]}
-              value={formData.state}
-              onChangeText={(text) => updateField("state", text)}
-              placeholder="Enter your state"
-              placeholderTextColor="#999"
-            />
-            {errors.state && (
-              <Text style={styles.errorText}>{errors.state}</Text>
-            )}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>City *</Text>
-            <TextInput
-              style={[styles.input, errors.city && styles.inputError]}
-              value={formData.city}
-              onChangeText={(text) => updateField("city", text)}
-              placeholder="Enter your city"
-              placeholderTextColor="#999"
-            />
-            {errors.city && <Text style={styles.errorText}>{errors.city}</Text>}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Pincode *</Text>
-            <TextInput
-              style={[styles.input, errors.pincode && styles.inputError]}
-              value={formData.pincode}
-              onChangeText={(text) => updateField("pincode", text)}
-              placeholder="Enter 6-digit pincode"
-              placeholderTextColor="#999"
-              keyboardType="numeric"
-              maxLength={6}
-            />
-            {errors.pincode && (
-              <Text style={styles.errorText}>{errors.pincode}</Text>
-            )}
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Phone Number *</Text>
-            <TextInput
-              style={[styles.input, errors.phoneNumber && styles.inputError]}
-              value={formData.phoneNumber}
-              onChangeText={(text) => updateField("phoneNumber", text)}
-              placeholder="Enter 10-digit phone number"
-              placeholderTextColor="#999"
-              keyboardType="phone-pad"
-              maxLength={10}
-            />
-            {errors.phoneNumber && (
-              <Text style={styles.errorText}>{errors.phoneNumber}</Text>
-            )}
-          </View>
-
-          <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-            <Text style={styles.submitButtonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#f5f5f5",
+  },
   container: {
     flex: 1,
     backgroundColor: "#f5f5f5",
