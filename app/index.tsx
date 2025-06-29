@@ -4,8 +4,8 @@ import useToast from "@/hooks/toast";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
-  Alert,
   KeyboardAvoidingView,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -63,6 +63,7 @@ export default function FormScreen() {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusedField, setFocusedField] = useState<string | null>(null);
   const [cities, setCities] = useState([]);
+  const [showSuccessModal, setShowSuccessModal] = useState(false);
   const { postQuery } = usePostQuery();
   const { showToast } = useToast();
 
@@ -142,29 +143,23 @@ export default function FormScreen() {
   const handleSubmit = async () => {
     const isValid = await validateForm();
     if (isValid) {
-      Alert.alert(
-        "Form Submitted Successfully!",
-        `Name: ${formData.name}\nAddress: ${formData.address}\nCity: ${formData.city}\nState: ${formData.state}\nPincode: ${formData.pincode}\nPhone: ${formData.phoneNumber}`,
-        [
-          {
-            text: "OK",
-            onPress: () => {
-              // Reset form after submission
-              setFormData({
-                name: "",
-                address: "",
-                state: "",
-                city: "",
-                pincode: "",
-                phoneNumber: "",
-              });
-              setErrors({});
-              setCities([]); // Reset cities as well
-            },
-          },
-        ]
-      );
+      setShowSuccessModal(true);
     }
+  };
+
+  const handleModalClose = () => {
+    setShowSuccessModal(false);
+    // Reset form after submission
+    setFormData({
+      name: "",
+      address: "",
+      state: "",
+      city: "",
+      pincode: "",
+      phoneNumber: "",
+    });
+    setErrors({});
+    setCities([]); // Reset cities as well
   };
 
   return (
@@ -327,6 +322,77 @@ export default function FormScreen() {
           </ScrollView>
         </KeyboardAvoidingView>
       </LinearGradient>
+
+      {/* Success Modal */}
+      <Modal
+        visible={showSuccessModal}
+        transparent={true}
+        animationType="fade"
+        onRequestClose={handleModalClose}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={styles.modalContainer}>
+            <LinearGradient
+              colors={["#667eea", "#764ba2"]}
+              start={{ x: 0, y: 0 }}
+              end={{ x: 1, y: 1 }}
+              style={styles.modalGradient}
+            >
+              <View style={styles.modalContent}>
+                <Text style={styles.modalTitle}>🚀 Submitted!</Text>
+
+                <View style={styles.modalDetailsContainer}>
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>Name:</Text>
+                    <Text style={styles.modalDetailValue}>{formData.name}</Text>
+                  </View>
+
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>Address:</Text>
+                    <Text style={styles.modalDetailValue}>
+                      {formData.address}
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>City:</Text>
+                    <Text style={styles.modalDetailValue}>{formData.city}</Text>
+                  </View>
+
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>State:</Text>
+                    <Text style={styles.modalDetailValue}>
+                      {formData.state}
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>Pincode:</Text>
+                    <Text style={styles.modalDetailValue}>
+                      {formData.pincode}
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalDetailRow}>
+                    <Text style={styles.modalDetailLabel}>Phone:</Text>
+                    <Text style={styles.modalDetailValue}>
+                      {formData.phoneNumber}
+                    </Text>
+                  </View>
+                </View>
+
+                <TouchableOpacity
+                  style={styles.modalButton}
+                  onPress={handleModalClose}
+                  activeOpacity={0.8}
+                >
+                  <Text style={styles.modalButtonText}>OK</Text>
+                </TouchableOpacity>
+              </View>
+            </LinearGradient>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -465,6 +531,92 @@ const styles = StyleSheet.create({
     fontFamily: "Quicksand_Medium",
     letterSpacing: 1,
     textShadowColor: "rgba(0, 0, 0, 0.2)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  modalContainer: {
+    width: "100%",
+    maxWidth: 400,
+    borderRadius: 20,
+    overflow: "hidden",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 10,
+    },
+    shadowOpacity: 0.3,
+    shadowRadius: 20,
+    elevation: 15,
+  },
+  modalGradient: {
+    borderRadius: 20,
+  },
+  modalContent: {
+    padding: 16,
+    alignItems: "center",
+  },
+  modalTitle: {
+    fontSize: 22,
+    fontWeight: "800",
+    fontFamily: "Quicksand_Medium",
+    color: "#FFFFFF",
+    textAlign: "center",
+    marginBottom: 24,
+    letterSpacing: 0.5,
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
+    textShadowOffset: { width: 0, height: 2 },
+    textShadowRadius: 4,
+  },
+  modalDetailsContainer: {
+    width: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
+    borderRadius: 16,
+    padding: 20,
+    marginBottom: 24,
+  },
+  modalDetailRow: {
+    flexDirection: "row",
+    marginBottom: 12,
+    alignItems: "flex-start",
+  },
+  modalDetailLabel: {
+    fontSize: 16,
+    fontWeight: "700",
+    fontFamily: "Quicksand_Medium",
+    color: "#4A5568",
+    width: 80,
+    letterSpacing: 0.3,
+  },
+  modalDetailValue: {
+    fontSize: 16,
+    fontFamily: "Quicksand_Medium",
+    color: "#2D3748",
+    flex: 1,
+    fontWeight: "500",
+  },
+  modalButton: {
+    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    borderRadius: 12,
+    paddingVertical: 10,
+    paddingHorizontal: 35,
+    borderWidth: 2,
+    borderColor: "rgba(255, 255, 255, 0.3)",
+  },
+  modalButtonText: {
+    color: "#FFFFFF",
+    fontSize: 18,
+    fontWeight: "700",
+    fontFamily: "Quicksand_Medium",
+    letterSpacing: 1,
+    textShadowColor: "rgba(0, 0, 0, 0.3)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
