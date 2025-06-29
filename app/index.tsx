@@ -26,16 +26,16 @@ interface FormData {
 const validationSchema = Yup.object().shape({
   name: Yup.string()
     .required("Please enter your name")
-    .min(2, "Name must be at least 2 characters"),
+    .min(2, "Name is a required field"),
   address: Yup.string()
     .required("Please enter your address")
-    .min(10, "Address must be at least 10 characters"),
+    .min(10, "Address is a required field"),
   state: Yup.string()
     .required("Please enter your state")
-    .min(2, "State must be at least 2 characters"),
+    .min(2, "State is a required field"),
   city: Yup.string()
     .required("Please enter your city")
-    .min(2, "City must be at least 2 characters"),
+    .min(2, "City is a required field"),
   pincode: Yup.string()
     .required("Please enter pincode")
     .matches(/^\d{6}$/, "Pincode must be exactly 6 digits"),
