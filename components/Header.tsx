@@ -10,7 +10,7 @@ export default function Header() {
       start={{ x: 0, y: 0 }}
       end={{ x: 1, y: 1 }}
     >
-      <Text style={styles.headerText}>Form App</Text>
+      <Text style={styles.headerText}>Forms</Text>
     </LinearGradient>
   );
 }
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
     elevation: 8,
   },
   headerText: {
-    fontSize: 28,
+    fontSize: 24,
     fontWeight: "bold",
     color: "#ffffff",
     textAlign: "center",
