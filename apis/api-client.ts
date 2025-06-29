@@ -1,12 +1,10 @@
-import { Alert } from "react-native";
+
+import { clearStorage, getItem } from "@/utils/asyncStorage";
 import axios, { AxiosInstance } from "axios";
 import axiosRetry from "axios-retry";
+import asyncStorageConstants from "../utils/asyncStorageConstants";
+import logger from "../utils/logger";
 import { apiBaseUrl } from "./apis";
-import logger from "@/utils/logger";
-import asyncStorageConstants from "@/utils/asyncStorageConstants";
-import { getItem, clearStorage } from "@/utils/asyncStorage";
-import { logoutUser } from "@/utils/utils";
-import { store } from "../redux/store";
 
 const apiInstance = (): AxiosInstance => {
   const api: AxiosInstance = axios.create({
@@ -35,25 +33,7 @@ const apiInstance = (): AxiosInstance => {
       if (error.response?.data?.detail === "Invalid Token") {
         clearStorage();
       }
-      if (error.response?.data?.message === "Unauthorized") {
-        Alert.alert(
-          "Session Expired",
-          "Your session has expired. Please login again.",
-          [
-            {
-              text: "OK",
-              onPress: () => {
-                logoutUser(store?.dispatch);
-              },
-              style: "cancel",
-            },
-          ],
-          {
-            cancelable: false,
-            onDismiss: () => { },
-          }
-        );
-      }
+    
 
       logger.log("ERROR", error.response?.data?.message);
       throw error;

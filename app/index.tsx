@@ -1,3 +1,6 @@
+import { apiUrls } from "@/apis/apis";
+import usePostQuery from "@/hooks/post-query.hook";
+import useToast from "@/hooks/toast";
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
 import {
@@ -59,6 +62,9 @@ export default function FormScreen() {
 
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [focusedField, setFocusedField] = useState<string | null>(null);
+  const [cities, setCities] = useState([]);
+  const { postQuery } = usePostQuery();
+  const { showToast } = useToast();
 
   const updateField = (field: keyof FormData, value: string) => {
     setFormData((prev) => ({
@@ -94,6 +100,45 @@ export default function FormScreen() {
     }
   };
 
+  const handleStateSelect = async (selectedState) => {
+    setCities([]);
+    setFormData((prev) => ({
+      ...prev,
+      state: selectedState,
+      city: "", // Reset city when state changes
+    }));
+
+    // Clear errors for state and city
+    if (errors.state || errors.city) {
+      setErrors((prev) => ({
+        ...prev,
+        state: "",
+        city: "",
+      }));
+    }
+
+    try {
+      await postQuery({
+        url: apiUrls?.common.getCities,
+        postData: { country: "India", state: selectedState },
+        onSuccess: (res) => {
+          console.log("Cities fetched successfully:", res);
+          setCities(res.data || []);
+        },
+        onFail: (error) => {
+          console.error("Error fetching cities:", error);
+          showToast(
+            "error",
+            "Error",
+            "Failed to fetch cities for the selected state."
+          );
+        },
+      });
+    } catch (error) {
+      console.error("Error selecting state:", error);
+    }
+  };
+
   const handleSubmit = async () => {
     const isValid = await validateForm();
     if (isValid) {
@@ -114,6 +159,7 @@ export default function FormScreen() {
                 phoneNumber: "",
               });
               setErrors({});
+              setCities([]); // Reset cities as well
             },
           },
         ]
@@ -194,9 +240,7 @@ export default function FormScreen() {
                 <CustomDropdown
                   data={stateNames}
                   value={formData.state}
-                  onSelect={(selectedState) =>
-                    updateField("state", selectedState)
-                  }
+                  onSelect={handleStateSelect}
                   placeholder="Select your state"
                   error={!!errors.state}
                   focused={focusedField === "state"}
@@ -208,18 +252,14 @@ export default function FormScreen() {
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>City *</Text>
-                <TextInput
-                  style={[
-                    styles.input,
-                    errors.city && styles.inputError,
-                    focusedField === "city" && styles.inputFocused,
-                  ]}
+                <CustomDropdown
+                  data={cities}
                   value={formData.city}
-                  onChangeText={(text) => updateField("city", text)}
-                  onFocus={() => setFocusedField("city")}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder="Enter your city"
-                  placeholderTextColor="#A0AEC0"
+                  onSelect={(selectedCity) => updateField("city", selectedCity)}
+                  placeholder="Select your city"
+                  error={!!errors.city}
+                  focused={focusedField === "city"}
+                  disabled={!formData.state || cities.length === 0}
                 />
                 {errors.city && (
                   <Text style={styles.errorText}>{errors.city}</Text>
