@@ -160,7 +160,7 @@ export default function FormScreen() {
                   placeholderTextColor="#A0AEC0"
                 />
                 {errors.name && (
-                  <Text style={styles.errorText}>⚠️ {errors.name}</Text>
+                  <Text style={styles.errorText}>{errors.name}</Text>
                 )}
               </View>
 
@@ -183,7 +183,7 @@ export default function FormScreen() {
                   numberOfLines={3}
                 />
                 {errors.address && (
-                  <Text style={styles.errorText}>⚠️ {errors.address}</Text>
+                  <Text style={styles.errorText}>{errors.address}</Text>
                 )}
               </View>
 
@@ -203,7 +203,7 @@ export default function FormScreen() {
                   placeholderTextColor="#A0AEC0"
                 />
                 {errors.state && (
-                  <Text style={styles.errorText}>⚠️ {errors.state}</Text>
+                  <Text style={styles.errorText}>{errors.state}</Text>
                 )}
               </View>
 
@@ -223,7 +223,7 @@ export default function FormScreen() {
                   placeholderTextColor="#A0AEC0"
                 />
                 {errors.city && (
-                  <Text style={styles.errorText}>⚠️ {errors.city}</Text>
+                  <Text style={styles.errorText}>{errors.city}</Text>
                 )}
               </View>
 
@@ -245,7 +245,7 @@ export default function FormScreen() {
                   maxLength={6}
                 />
                 {errors.pincode && (
-                  <Text style={styles.errorText}>⚠️ {errors.pincode}</Text>
+                  <Text style={styles.errorText}>{errors.pincode}</Text>
                 )}
               </View>
 
@@ -267,7 +267,7 @@ export default function FormScreen() {
                   maxLength={10}
                 />
                 {errors.phoneNumber && (
-                  <Text style={styles.errorText}>⚠️ {errors.phoneNumber}</Text>
+                  <Text style={styles.errorText}>{errors.phoneNumber}</Text>
                 )}
               </View>
 
@@ -380,13 +380,13 @@ const styles = StyleSheet.create({
     transform: [{ scale: 1.02 }],
   },
   inputError: {
-    borderColor: "#E53E3E",
-    backgroundColor: "#FED7D7",
+    borderColor: "#F56565",
+    backgroundColor: "#fff",
     shadowColor: "#E53E3E",
     shadowOpacity: 0.2,
   },
   errorText: {
-    color: "#E53E3E",
+    color: "#F56565",
     fontSize: 13,
     marginTop: 6,
     fontWeight: "600",
