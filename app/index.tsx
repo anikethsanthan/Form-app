@@ -100,7 +100,7 @@ export default function FormScreen() {
     }
   };
 
-  const handleStateSelect = async (selectedState) => {
+  const handleStateSelect = async (selectedState: string) => {
     setCities([]);
     setFormData((prev) => ({
       ...prev,
@@ -121,11 +121,11 @@ export default function FormScreen() {
       await postQuery({
         url: apiUrls?.common.getCities,
         postData: { country: "India", state: selectedState },
-        onSuccess: (res) => {
+        onSuccess: (res: any) => {
           console.log("Cities fetched successfully:", res);
           setCities(res.data || []);
         },
-        onFail: (error) => {
+        onFail: (error: any) => {
           console.error("Error fetching cities:", error);
           showToast(
             "error",
@@ -259,7 +259,6 @@ export default function FormScreen() {
                   placeholder="Select your city"
                   error={!!errors.city}
                   focused={focusedField === "city"}
-                  disabled={!formData.state || cities.length === 0}
                 />
                 {errors.city && (
                   <Text style={styles.errorText}>{errors.city}</Text>
