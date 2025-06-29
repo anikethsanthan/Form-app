@@ -6,11 +6,11 @@ export default function Header() {
   return (
     <LinearGradient
       style={styles.headerContainer}
-      colors={["#8B5CF6", "#6B46C1"]}
+      colors={["#EAE7F0", "#FFFFFF"]}
       start={{ x: 0, y: 0 }}
-      end={{ x: 1, y: 1 }}
+      end={{ x: 0, y: 1 }}
     >
-      <Text style={styles.headerText}>Forms</Text>
+      <Text style={styles.headerText}>Registration Form</Text>
     </LinearGradient>
   );
 }
@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "flex-end",
-    shadowColor: "#6B46C1",
+    shadowColor: "#B8B5C9",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -39,11 +39,11 @@ const styles = StyleSheet.create({
   headerText: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#ffffff",
+    color: "#6B46C1",
     textAlign: "center",
     letterSpacing: 1,
-    textShadowColor: "rgba(0, 0, 0, 0.2)",
-    textShadowOffset: { width: 0, height: 2 },
-    textShadowRadius: 4,
+    textShadowColor: "rgba(107, 70, 193, 0.3)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
   },
 });

@@ -133,7 +133,7 @@ export default function FormScreen() {
         >
           <ScrollView contentContainerStyle={styles.scrollContainer}>
             <View style={styles.formContainer}>
-              <Text style={styles.title}>Personal Information Form</Text>
+              <Text style={styles.title}>Personal Information </Text>
 
               <View style={styles.inputContainer}>
                 <Text style={styles.label}>Name *</Text>
@@ -233,10 +233,17 @@ export default function FormScreen() {
               </View>
 
               <TouchableOpacity
-                style={styles.submitButton}
+                style={styles.submitButtonContainer}
                 onPress={handleSubmit}
               >
-                <Text style={styles.submitButtonText}>Submit</Text>
+                <LinearGradient
+                  style={styles.submitButton}
+                  colors={["#EAE7F0", "#FFFFFF"]}
+                  start={{ x: 0, y: 0 }}
+                  end={{ x: 1, y: 1 }}
+                >
+                  <Text style={styles.submitButtonText}>Submit</Text>
+                </LinearGradient>
               </TouchableOpacity>
             </View>
           </ScrollView>
@@ -249,7 +256,7 @@ export default function FormScreen() {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: "#8B5CF6", // Match header gradient color
+    backgroundColor: "#EAE7F0", // Match header gradient color
   },
   MainContainer: {
     flex: 1,
@@ -262,10 +269,10 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   formContainer: {
-    backgroundColor: "rgba(255, 255, 255, 0.9)",
+    backgroundColor: "rgba(255, 255, 255, 0.95)",
     borderRadius: 16,
     padding: 18,
-    shadowColor: "#6B46C1",
+    shadowColor: "#B8B5C9",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -274,15 +281,15 @@ const styles = StyleSheet.create({
     shadowRadius: 8,
     elevation: 8,
     borderWidth: 1,
-    borderColor: "rgba(139, 92, 246, 0.1)",
+    borderColor: "rgba(184, 181, 201, 0.2)",
   },
   title: {
     textAlign: "center",
     marginBottom: 30,
     fontSize: 22,
     fontWeight: "bold",
-    color: "#6B46C1",
-    textShadowColor: "rgba(107, 70, 193, 0.2)",
+    color: "#5B4B75",
+    textShadowColor: "rgba(91, 75, 117, 0.2)",
     textShadowOffset: { width: 0, height: 1 },
     textShadowRadius: 2,
   },
@@ -293,17 +300,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginBottom: 8,
-    color: "#5B21B6",
+    color: "#6B5E79",
   },
   input: {
     borderWidth: 1.5,
-    borderColor: "#C7D2FE",
+    borderColor: "#D1C4E3",
     borderRadius: 12,
     padding: 14,
     fontSize: 16,
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
     color: "#374151",
-    shadowColor: "#8B5CF6",
+    shadowColor: "#B8B5C9",
     shadowOffset: {
       width: 0,
       height: 2,
@@ -327,13 +334,10 @@ const styles = StyleSheet.create({
     height: 80,
     textAlignVertical: "top",
   },
-  submitButton: {
-    backgroundColor: "#8B5CF6",
-    borderRadius: 12,
-    padding: 16,
-    alignItems: "center",
+  submitButtonContainer: {
     marginTop: 24,
-    shadowColor: "#8B5CF6",
+    borderRadius: 12,
+    shadowColor: "#B8B5C9",
     shadowOffset: {
       width: 0,
       height: 4,
@@ -342,8 +346,15 @@ const styles = StyleSheet.create({
     shadowRadius: 6,
     elevation: 8,
   },
+  submitButton: {
+    borderRadius: 12,
+    padding: 16,
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#D1C4E3",
+  },
   submitButtonText: {
-    color: "#ffffff",
+    color: "#5B4B75",
     fontSize: 18,
     fontWeight: "bold",
     letterSpacing: 0.5,
