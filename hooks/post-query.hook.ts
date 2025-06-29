@@ -1,0 +1,57 @@
+import { useState } from 'react';
+import apiClient from '../apis/api-client';
+import logger from '../utils/logger';
+
+const headers = {
+  'Content-Type': 'application/json',
+};
+
+const usePostQuery = () => {
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState();
+  const [error, setError] = useState();
+
+  const postQuery = async (params:any) => {
+    const {
+      url,
+      onSuccess = () => {
+        logger.log('onSuccess function');
+      },
+      onFail = () => {
+        logger.log('onFail function');
+      },
+      postData,
+      headers: headersfromParams,
+    } = params;
+    setLoading(true);
+    try {
+      const { data: apiData = {} } = await apiClient.post(url, postData, {
+        headers: headersfromParams ? headersfromParams : headers,
+      });
+      setData(apiData);
+      await onSuccess(apiData);
+      logger.log(apiData, 'postQuery-success');
+    } catch (err:any) {
+      onFail(err.response.data);
+      console.log(err.response.data,"kjhgghjk");
+      logger.log(err, 'postQuery-fail');
+      logger.log(err.message, 'postQuery-fail');
+      setError(err);
+    //   setData();
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    postQuery,
+    loading,
+    setLoading,
+    data,
+    setData,
+    error,
+    setError,
+  };
+};
+
+export default usePostQuery;
